@@ -1,6 +1,6 @@
 from room import Room
 
-# Declare all the rooms
+# Declare all the roomss
 
 room = {
     'outside':  Room("Outside Cave Entrance",
