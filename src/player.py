@@ -4,3 +4,10 @@ class Player:
     def __init__(self, name, current_room):
         self.name = name
         self.current_room = current_room
+
+    def move(self, direction):
+        room = self.current_room.room_direction(direction)
+        if room is not None:
+            self.current_room = room
+        else:
+            print('the way is blocked')
