@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the roomss
 
@@ -22,6 +23,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+item = {
+    'axe': Item("Axe of Thror", "The legendary axe of Thror created from the 'lord Star' and crafted by the hand of the creator"),
+    'torch': Item("Forever Flame Torch", "A regular looking torch that bares the last remnants of the forever flame gifted from the 'lord Star'."),
+    'spear': Item('Long Spear', 'the spear weilded by the legendary warrior "RiverWind", past down to tribal leaders for centuries'),
+    'flint': Item('Everlast Flint', 'Everlast flint was a gift from the priestess "Minwae", to the clan of "Last River" to bring them light in the darkness')
+}
 
 # Link rooms together
 
@@ -55,55 +62,49 @@ player = Player(input('Name?'), room['outside'])
 
 # version 1
 
-# while True:
-#     print(
-#         f"\t Room: {player.current_room.name}\n {player.current_room.description}")
-#     text_stuff = input('make a move?').split(' ')
-#     if text_stuff[0] is "q":
-#         print('Your are Leaving the game')
-#         break
-#     elif text_stuff[0] == 'n':
-#         player.move(text_stuff[0])
-#     elif text_stuff[0] == 'e':
-#         player.move(text_stuff[0])
-#     elif text_stuff[0] == 'w':
-#         player.move(text_stuff[0])
-#     elif text_stuff[0] == 's':
-#         player.move(text_stuff[0])
-#     else:
-#         print('please enter the proper commands n, s, e, w or q for Quit ')
-
-# version 2
 while True:
     print(
         f"\t Room: {player.current_room.name}\n {player.current_room.description}")
-    user_input = input('make a move ').strip().lower().split(' ')
-    if user_input[0] == 'q':
-        print('Your are leaving the game!')
+    text_stuff = input('make a move?').split(' ')
+    if text_stuff[0] is "q":
+        print('Your are Leaving the game')
         break
-    if user_input[0] == 'n':
-        if player.current_room.n_to is None:
-            print('Cant go that way')
-            continue
-        else:
-            player.current_room = player.current_room.n_to
-    elif user_input[0] == 's':
-        if player.current_room.s_to is None:
-            print('Cant go that way')
-            continue
-        else:
-            player.current_room = player.current_room.s_to
-    elif user_input[0] == 'e':
-        if player.current_room.e_to is None:
-            print('Cant go that way')
-            continue
-        else:
-            player.current_room = player.current_room.e_to
-    elif user_input[0] == 'w':
-        if player.current_room.w_to is None:
-            print('Cant go that way')
-            continue
-        else:
-            player.current_room = player.current_room.w_to
+    elif text_stuff[0] == 'n' or text_stuff[0] == 's' or text_stuff[0] == 'e' or text_stuff[0] == 'w':
+        player.move(text_stuff[0])
     else:
         print('please enter the proper commands n, s, e, w or q for Quit ')
+
+# # version 2
+# while True:
+#     print(
+#         f"\t Room: {player.current_room.name}\n {player.current_room.description}")
+#     user_input = input('make a move ').strip().lower().split(' ')
+#     if user_input[0] == 'q':
+#         print('Your are leaving the game!')
+#         break
+#     if user_input[0] == 'n':
+#         if player.current_room.n_to is None:
+#             print('Cant go that way')
+#             continue
+#         else:
+#             player.current_room = player.current_room.n_to
+#     elif user_input[0] == 's':
+#         if player.current_room.s_to is None:
+#             print('Cant go that way')
+#             continue
+#         else:
+#             player.current_room = player.current_room.s_to
+#     elif user_input[0] == 'e':
+#         if player.current_room.e_to is None:
+#             print('Cant go that way')
+#             continue
+#         else:
+#             player.current_room = player.current_room.e_to
+#     elif user_input[0] == 'w':
+#         if player.current_room.w_to is None:
+#             print('Cant go that way')
+#             continue
+#         else:
+#             player.current_room = player.current_room.w_to
+#     else:
+#         print('please enter the proper commands n, s, e, w or q for Quit ')
