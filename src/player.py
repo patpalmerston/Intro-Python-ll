@@ -24,7 +24,7 @@ class Player:
     def view_inventory(self):
         return self.inventory
 
-    def pick_up_item(self, item):
+    def grab_item(self, item):
         return self.inventory.append(item)
 
     def drop_item(self, item):

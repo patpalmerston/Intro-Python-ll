@@ -23,11 +23,12 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-item = {
+items = {
     'axe': Item("Axe of Thror", "The legendary axe of Thror created from the 'lord Star' and crafted by the hand of the creator"),
     'torch': Item("Forever Flame Torch", "A regular looking torch that bares the last remnants of the forever flame gifted from the 'lord Star'."),
     'spear': Item('Long Spear', 'the spear weilded by the legendary warrior "RiverWind", past down to tribal leaders for centuries'),
-    'flint': Item('Everlast Flint', 'Everlast flint was a gift from the priestess "Minwae", to the clan of "Last River" to bring them light in the darkness')
+    'flint': Item('Everlast Flint', 'Everlast flint was a gift from the priestess "Minwae", to the clan of "Last River" to bring them light in the darkness'),
+    'gold' : Item('Dante\'s treasure', 'Hidden from the eyes of mortals you have now discovered the greatest treasure ever place on the "Great Rock".')
 }
 
 # Link rooms together
@@ -40,6 +41,12 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+room['outside'].add_item(items['axe'])
+room['foyer'].add_item(items['torch'])
+room['overlook'].add_item(items['spear'])
+room['narrow'].add_item(items['flint'])
+room['treasure'].add_item(items['gold'])
 
 #
 # Main
@@ -65,6 +72,7 @@ player = Player(input('Name?'), room['outside'])
 while True:
     print(
         f"\t Room: {player.current_room.name}\n {player.current_room.description}")
+    print(f'items available in this room are: {[item.name for item in player.current_room.view_room_items()]}')
     text_stuff = input('make a move?').split(' ')
     if text_stuff[0] is "q":
         print('Your are Leaving the game')
@@ -73,6 +81,33 @@ while True:
         player.move(text_stuff[0])
     else:
         print('please enter the proper commands n, s, e, w or q for Quit ')
+
+#------------
+#Add functionality to the main loop that prints out all the items that are visible to the player when they are in that room.
+#------------
+#Add a new type of sentence the parser can understand: two words.
+
+#Until now, the parser could just understand one sentence form:
+
+#verb
+
+#such as "n" or "q".
+
+#But now we want to add the form:
+
+#verb object
+
+#such as "take coins" or "drop sword".
+
+#Split the entered command and see if it has 1 or 2 words in it to determine if it's the first or second form.
+
+
+
+
+
+
+
+
 
 # # version 2
 # while True:
