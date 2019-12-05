@@ -24,11 +24,11 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 items = {
-    'axe': Item("Axe of Thror", "The legendary axe of Thror created from the 'lord Star' and crafted by the hand of the creator"),
-    'torch': Item("Forever Flame Torch", "A regular looking torch that bares the last remnants of the forever flame gifted from the 'lord Star'."),
-    'spear': Item('Long Spear', 'the spear weilded by the legendary warrior "RiverWind", past down to tribal leaders for centuries'),
-    'flint': Item('Everlast Flint', 'Everlast flint was a gift from the priestess "Minwae", to the clan of "Last River" to bring them light in the darkness'),
-    'gold' : Item('Dante\'s treasure', 'Hidden from the eyes of mortals you have now discovered the greatest treasure ever place on the "Great Rock".')
+    'axe': Item("axe", "The legendary axe of Thror created from the 'lord Star' and crafted by the hand of the creator"),
+    'torch': Item("torch", "A regular looking torch that bares the last remnants of the forever flame gifted from the 'lord Star'."),
+    'spear': Item('spear', 'the spear weilded by the legendary warrior "RiverWind", past down to tribal leaders for centuries'),
+    'flint': Item('flint', 'Everlast flint was a gift from the priestess "Minwae", to the clan of "Last River" to bring them light in the darkness'),
+    'gold': Item('gold', 'Hidden from the eyes of mortals you have now discovered the greatest treasure ever place on the "Great Rock".')
 }
 
 # Link rooms together
@@ -42,10 +42,19 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# create room items
 room['outside'].add_item(items['axe'])
+room['outside'].add_item(items['spear'])
+room['outside'].add_item(items['torch'])
 room['foyer'].add_item(items['torch'])
+room['foyer'].add_item(items['axe'])
+room['foyer'].add_item(items['spear'])
 room['overlook'].add_item(items['spear'])
+room['overlook'].add_item(items['axe'])
+room['overlook'].add_item(items['torch'])
 room['narrow'].add_item(items['flint'])
+room['narrow'].add_item(items['axe'])
+room['narrow'].add_item(items['spear'])
 room['treasure'].add_item(items['gold'])
 
 #
@@ -55,66 +64,56 @@ room['treasure'].add_item(items['gold'])
 # Make a new player object that is currently in the 'outside' room.
 player = Player(input('Name?'), room['outside'])
 
-# Write a loop that:
-#
-# * Print the current room name
-# * Prints the current description (the textwrap module might be useful here).
-
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
-
 # version 1
 
 while True:
     print(
         f"\t Room: {player.current_room.name}\n {player.current_room.description}")
-    print(f'items available in this room are: {[item.name for item in player.current_room.view_room_items()]}')
-    text_stuff = input('make a move?').split(' ')
-    if text_stuff[0] is "q":
+    print(
+        f'items available in this room are: {[item.name for item in player.current_room.view_room_items()]}')
+
+    cmd = input('make a move? ').strip().lower().split(" ")
+
+    current_items = {
+        item.name: item for item in player.current_room.view_room_items()}
+
+    player_items = {item.name for item in player.view_inventory()}
+    # print('current_items', [current_items])
+
+    if cmd[0] == "q":
         print('Your are Leaving the game')
         break
-    elif text_stuff[0] == 'n' or text_stuff[0] == 's' or text_stuff[0] == 'e' or text_stuff[0] == 'w':
-        player.move(text_stuff[0])
-    elif text_stuff[0] == 'i':
-        print(f'items in inventory: {player.view_inventory()}')
-    elif len(text_stuff) == 2:
-        verb = text_stuff[0]
-        item_name = text_stuff[1]
+    elif cmd[0] == 'n' or cmd[0] == 's' or cmd[0] == 'e' or cmd[0] == 'w':
+        player.move(cmd[0])
+
+    elif cmd[0] == 'i':
+        print(f'items in inventory: {player_items}')
+
+    elif len(cmd) == 2:
+        verb = cmd[0]
+        item_name = cmd[1]
 
         if verb == "take" or verb == "get":
-            if item_name not in player.current_room.view_room_items():
+            # print('verb', verb)
+            # print('item_name', item_name)
+            if item_name not in current_items:
                 print("Item does not exist in this room!")
                 continue
+            else:
+                player.current_room.remove_item(current_items[item_name])
+                player.grab_item(current_items[item_name])
+                current_items[item_name].on_take()
+        elif verb == 'drop':
+            if item_name not in current_items:
+                player.current_room.add_item(current_items[item_name])
+                player.drop_item(current_items[item_name])
+                current_items[item_name].on_drop()
+            else:
+                print('Well this is embarrasing, you dont have an ' + item_name)
+                continue
+
     else:
         print('please enter the proper commands "n", "s", "e", "w", "i" for Inventory, "q" for Quit ')
-
-#------------
-#Add a new type of sentence the parser can understand: two words.
-
-#Until now, the parser could just understand one sentence form:
-
-#verb
-
-#such as "n" or "q".
-
-#But now we want to add the form:
-
-#verb object
-
-#such as "take coins" or "drop sword".
-
-#Split the entered command and see if it has 1 or 2 words in it to determine if it's the first or second form.
-
-
-
-
-
-
-
 
 
 # # version 2
