@@ -79,11 +79,11 @@ while True:
         break
     elif text_stuff[0] == 'n' or text_stuff[0] == 's' or text_stuff[0] == 'e' or text_stuff[0] == 'w':
         player.move(text_stuff[0])
+    elif text_stuff[0] == 'i':
+        print(f'items in inventory: {player.view_inventory()}')
     else:
-        print('please enter the proper commands n, s, e, w or q for Quit ')
+        print('please enter the proper commands n, s, e, w, i for inventory, q for Quit ')
 
-#------------
-#Add functionality to the main loop that prints out all the items that are visible to the player when they are in that room.
 #------------
 #Add a new type of sentence the parser can understand: two words.
 
