@@ -10,6 +10,7 @@ class Room:
         self.s_to = None
         self.e_to = None
         self.w_to = None
+        self.items = []
 # we need a way to connect the directional input to the directional keys and link in the adv.py
 
 #version 1
@@ -26,8 +27,11 @@ class Room:
         else:
             return None
 
-    def add_item(self):
-        pass
+    def view_room_items(self):
+        return self.items
+
+    def add_item(self, item):
+        return self.items.append(item)
     
-    def remove_item(self):
-        pass
+    def remove_item(self, item):
+        return self.items.remove(item)

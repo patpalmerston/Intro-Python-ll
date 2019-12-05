@@ -17,15 +17,15 @@ class Player:
         if room is not None:
             self.current_room = room
             # print('player.py room', room.name)
-            # print('player.py direction', direction)
+            # print('player.py direction', direction )
         else:
             print('the way is blocked')
 
     def view_inventory(self):
         return self.inventory
 
-    def pick_up_item(self):
+    def pick_up_item(self, item):
         return self.inventory.append(item)
-    
-    def drop_item(self):
+
+    def drop_item(self, item):
         return self.inventory.remove(item)
