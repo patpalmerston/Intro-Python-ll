@@ -81,8 +81,16 @@ while True:
         player.move(text_stuff[0])
     elif text_stuff[0] == 'i':
         print(f'items in inventory: {player.view_inventory()}')
+    elif len(text_stuff) == 2:
+        verb = text_stuff[0]
+        item_name = text_stuff[1]
+
+        if verb == "take" or verb == "get":
+            if item_name not in player.current_room.view_room_items():
+                print("Item does not exist in this room!")
+                continue
     else:
-        print('please enter the proper commands n, s, e, w, i for inventory, q for Quit ')
+        print('please enter the proper commands "n", "s", "e", "w", "i" for Inventory, "q" for Quit ')
 
 #------------
 #Add a new type of sentence the parser can understand: two words.
